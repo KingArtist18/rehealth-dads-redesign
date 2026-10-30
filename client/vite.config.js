@@ -1,7 +1,12 @@
-import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react()], // Enables React support
+  server: {
+    proxy: {
+      // Any request starting with /api is passed to the Express server
+      '/api': 'http://localhost:5000',
+    },
+  },
 })

@@ -1,17 +1,34 @@
 import { useState } from 'react' // Lets the form remember what was typed
 
 export default function Contact() {
-  // One object holds all form fields
-  const [form, setForm] = useState({ name: '', email: '', topic: 'guide', message: '' })
-  const [sent, setSent] = useState(false) // true after the form is submitted
+  const [form, setForm] = useState({ name: '', email: '', topic: 'guide', message: '' }) // All form fields
+  const [sent, setSent] = useState(false) // true after a successful submit
+  const [error, setError] = useState('') // Error message to show, if any
+  const [loading, setLoading] = useState(false) // true while the request is running
 
   // Updates one field when the person types
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault() // Stops the page from reloading
-    // TODO (Step 5): send `form` to the Express server. For now we only show the thank-you message.
-    setSent(true)
+    setError('')
+    setLoading(true)
+    // The free guide goes to /api/subscribe, everything else to /api/contact
+    const url = form.topic === 'guide' ? '/api/subscribe' : '/api/contact'
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form), // Sends the form as JSON
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.')
+      setSent(true) // Show the thank-you message
+    } catch (err) {
+      setError(err.message || 'Could not send. Please try again.') // Show what went wrong
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -26,7 +43,6 @@ export default function Contact() {
       <section className="section">
         <div className="container form-wrap">
           {sent ? (
-            // Shown after submitting
             <div className="panel">
               <h2>Thank you, {form.name}.</h2>
               <p>Your message has been received. Paul will be in touch soon.</p>
@@ -49,7 +65,11 @@ export default function Contact() {
               <label htmlFor="message">Message (optional)</label>
               <textarea id="message" name="message" rows="5" value={form.message} onChange={handleChange} />
 
-              <button type="submit" className="btn btn--green">Send</button>
+              {error && <p className="form__error" role="alert">{error}</p>} {/* Only shows if there is an error */}
+
+              <button type="submit" className="btn btn--green" disabled={loading}>
+                {loading ? 'Sending...' : 'Send'} {/* Button text changes while sending */}
+              </button>
             </form>
           )}
         </div>
