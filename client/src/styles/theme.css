@@ -114,3 +114,24 @@ p{margin:0 0 1em;max-width:62ch} /* Limits line length so text is easy to read *
   .duo,.wins{grid-template-columns:1fr} /* Stack columns */
   .duo--reverse .photo{order:0} /* Photo goes back to its natural order */
 }
+
+/* ===== INNER PAGE BANNER ===== */
+.page-hero{background:var(--grad-blue);color:#fff;padding:clamp(3rem,7vw,5rem) 0;border-bottom:4px solid var(--copper)} /* Blue banner with a copper line */
+.page-hero h1{font-size:clamp(2.2rem,5vw,3.4rem)} /* Slightly smaller than the home headline */
+.page-hero p{font-size:1.1rem;opacity:.92}
+
+/* ===== PHOTO GALLERY (About page) ===== */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.gallery .photo{aspect-ratio:1/1} /* Square photos */
+
+/* ===== CONTACT FORM ===== */
+.form-wrap{max-width:640px} /* Keeps the form a comfortable width */
+.form{display:grid;gap:.5rem}
+.form label{font-weight:600;margin-top:.8rem}
+.form input,.form select,.form textarea{padding:.8rem 1rem;border:2px solid #c9d3dd;border-radius:12px;font:inherit;background:#fff}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--blue);outline:none} /* Blue border when typing */
+.form .btn{margin-top:1.4rem;justify-self:start;cursor:pointer;font-family:inherit;font-size:1rem}
+
+@media (max-width:820px){
+  .gallery{grid-template-columns:1fr} /* Photos stack on phones */
+}
