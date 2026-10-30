@@ -8,8 +8,14 @@ const items = [
 export default function Problem() {
   return (
     <section className="section">
-      <div className="container split"> {/* Two columns: heading left, list right */}
-        <h2>What keeps good dads stuck</h2>
+      <div className="container split"> {/* Two columns: heading + photo left, list right */}
+        <div>
+          <h2>What keeps good dads stuck</h2>
+          {/* Photo sits under the heading, loaded from client/public/images */}
+          <div className="photo photo--wide">
+            <img src="/images/shoulders-look.jpg" alt="A father carrying his son on his shoulders, both looking ahead" />
+          </div>
+        </div>
         <ul className="rule-list"> {/* List with copper lines between items */}
           {/* Loop over the items array and make one <li> for each */}
           {items.map(([title, text]) => (

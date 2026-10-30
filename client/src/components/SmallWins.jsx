@@ -9,18 +9,23 @@ const wins = [
 export default function SmallWins() {
   return (
     <section className="section section--blue"> {/* Blue gradient background with white text */}
-      <div className="container">
-        <h2>One small win at a time</h2>
-        <p className="section__lead">Progress is a series of steps you can actually keep.</p>
-        {/* <ol> is an ordered list, used because these steps happen in sequence */}
-        <ol className="path">
-          {wins.map(([title, text]) => (
-            <li key={title}> {/* CSS draws a green dot on the copper line for each one */}
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </li>
-          ))}
-        </ol>
+      <div className="container wins"> {/* Two columns: path left, photo right */}
+        <div>
+          <h2>One small win at a time</h2>
+          <p className="section__lead">Progress is a series of steps you can actually keep.</p>
+          {/* <ol> is an ordered list, used because these steps happen in sequence */}
+          <ol className="path">
+            {wins.map(([title, text]) => (
+              <li key={title}> {/* CSS draws a green dot on the copper line for each one */}
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className="photo">
+          <img src="/images/play-vacuum.jpg" alt="A father helping his son with a toy" />
+        </div>
       </div>
     </section>
   )
